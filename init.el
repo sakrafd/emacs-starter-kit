@@ -22,6 +22,12 @@
 (setq package-user-dir (concat dotfiles-dir "elpa"))
 (setq custom-file (concat dotfiles-dir "custom.el"))
 
+;; Fix cocoa emacs not getting user path
+(setenv "PATH" (concat "/opt/bin:/usr/local/git/bin" (getenv "PATH"))) 
+;;(setenv "PATH" (concat "/usr/local/git/bin" (getenv "PATH")))
+
+(setq exec-path (cons "/opt/bin:/usr/local/git/bin" exec-path))
+;;(setq exec-path (cons "/usr/local/git/bin" exec-path)) 
 ;; These should be loaded on startup rather than autoloaded on demand
 ;; since they are likely to be used in every session
 
