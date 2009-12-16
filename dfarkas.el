@@ -49,13 +49,19 @@
 ;; TODO javascript-indent-level 2
 
 ;; Rinari
- (add-to-list 'load-path (concat dotfiles-dir "/vendor/rinari"))
+(add-to-list 'load-path (concat dotfiles-dir "/vendor/jump.el"))
+(add-to-list 'load-path (concat dotfiles-dir "/vendor/rinari"))
 
 (require 'rinari)
 
-(autoload 'applescript-mode "applescript-mode" "major mode for editing AppleScript source." t)
-(setq auto-mode-alist
-      (cons '("\\.applescript$" . applescript-mode) auto-mode-alist))
+(define-key rinari-minor-mode-map [(control meta shift down)] 'rinari-find-rspec)
+(define-key rinari-minor-mode-map [(control meta shift left)] 'rinari-find-controller)
+(define-key rinari-minor-mode-map [(control meta shift up)] 'rinari-find-model)
+(define-key rinari-minor-mode-map [(control meta shift right)] 'rinari-find-view)
+
+;; (autoload 'applescript-mode "applescript-mode" "major mode for editing AppleScript source." t)
+;; (setq auto-mode-alist
+;;       (cons '("\\.applescript$" . applescript-mode) auto-mode-alist))
 
 
 (require 'textile-mode)
@@ -123,6 +129,7 @@
 ;; Some Mac-friendly key counterparts
 (global-set-key (kbd "M-s") 'save-buffer)
 (global-set-key (kbd "M-z") 'undo)
+(global-set-key (kbd "M-l") 'goto-line)
 
 ;; Keyboard Overrides
 (define-key textile-mode-map (kbd "M-s") 'save-buffer)

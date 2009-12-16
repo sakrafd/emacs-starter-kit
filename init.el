@@ -9,6 +9,14 @@
 ;; and brighter; it simply makes everything else vanish."
 ;; -Neal Stephenson, "In the Beginning was the Command Line"
 
+;; Fix cocoa emacs not getting user path
+(setenv "PATH" (concat "/opt/bin:/usr/local/git/bin:" (getenv "PATH"))) 
+;;(setenv "PATH" (concat "/usr/local/git/bin:" (getenv "PATH")))
+
+(setq exec-path (cons "/opt/bin:/usr/local/git/bin:" exec-path))
+;;(setq exec-path (cons "/usr/local/git/bin:" exec-path)) 
+
+
 ;; Load path etc.
 
 (setq dotfiles-dir (file-name-directory
@@ -16,18 +24,13 @@
 
 (add-to-list 'load-path dotfiles-dir)
 (add-to-list 'load-path (concat dotfiles-dir "/elpa-to-submit"))
-(add-to-list 'load-path (concat dotfiles-dir "/elpa-to-submit/jabber"))
+;;(add-to-list 'load-path (concat dotfiles-dir "/elpa-to-submit/jabber"))
 
 (setq autoload-file (concat dotfiles-dir "loaddefs.el"))
 (setq package-user-dir (concat dotfiles-dir "elpa"))
 (setq custom-file (concat dotfiles-dir "custom.el"))
 
-;; Fix cocoa emacs not getting user path
-(setenv "PATH" (concat "/opt/bin:/usr/local/git/bin" (getenv "PATH"))) 
-;;(setenv "PATH" (concat "/usr/local/git/bin" (getenv "PATH")))
 
-(setq exec-path (cons "/opt/bin:/usr/local/git/bin" exec-path))
-;;(setq exec-path (cons "/usr/local/git/bin" exec-path)) 
 ;; These should be loaded on startup rather than autoloaded on demand
 ;; since they are likely to be used in every session
 
@@ -40,47 +43,44 @@
 
 ;; this must be loaded before ELPA since it bundles its own
 ;; out-of-date js stuff. TODO: fix it to use ELPA dependencies
-(load "elpa-to-submit/nxhtml/autostart")
+;;(load "elpa-to-submit/nxhtml/autostart")
 
 ;; Load up ELPA, the package manager
 
 (require 'package)
 (package-initialize)
-(require 'starter-kit-elpa)
+;;(require 'starter-kit-elpa)
 
 ;; Load up starter kit customizations
 
-(require 'starter-kit-defuns)
-(require 'starter-kit-bindings)
-(require 'starter-kit-misc)
-(require 'starter-kit-registers)
-(require 'starter-kit-eshell)
-(require 'starter-kit-lisp)
-(require 'starter-kit-perl)
-(require 'starter-kit-ruby)
-(require 'starter-kit-js)
+ (require 'starter-kit-defuns)
+ (require 'starter-kit-bindings)
+ (require 'starter-kit-misc)
+ (require 'starter-kit-registers)
+ (require 'starter-kit-eshell)
+ (require 'starter-kit-lisp)
+ ;;(require 'starter-kit-perl)
+ (require 'starter-kit-ruby)
+ ;;(require 'starter-kit-js)
 
-(regen-autoloads)
+;;(regen-autoloads)
 (load custom-file 'noerror)
 
 ;; More complicated packages that haven't made it into ELPA yet
 
-(autoload 'jabber-connect "jabber" "" t)
+;; (autoload 'jabber-connect "jabber" "" t)
 ;; TODO: rinari, slime
 
-;; Work around a bug on OS X where system-name is FQDN
-(if (eq system-type 'darwin)
-    (setq system-name (car (split-string system-name "\\."))))
-
 ;; You can keep system- or user-specific customizations here
-(setq system-specific-config (concat dotfiles-dir system-name ".el")
-      user-specific-config (concat dotfiles-dir user-login-name ".el")
-      user-specific-dir (concat dotfiles-dir user-login-name))
-(add-to-list 'load-path user-specific-dir)
+ (setq system-specific-config (concat dotfiles-dir system-name ".el")
+       user-specific-config (concat dotfiles-dir user-login-name ".el")
+       user-specific-dir (concat dotfiles-dir user-login-name))
+ (add-to-list 'load-path user-specific-dir)
 
-(if (file-exists-p system-specific-config) (load system-specific-config))
-(if (file-exists-p user-specific-config) (load user-specific-config))
-(if (file-exists-p user-specific-dir)
-  (mapc #'load (directory-files user-specific-dir nil ".*el$")))
+ (if (file-exists-p system-specific-config) (load system-specific-config))
+ (if (file-exists-p user-specific-config) (load user-specific-config))
+ (if (file-exists-p user-specific-dir)
+   (mapc #'load (directory-files user-specific-dir nil ".*el$")))
 
 ;;; init.el ends here
+(put 'downcase-region 'disabled nil)
