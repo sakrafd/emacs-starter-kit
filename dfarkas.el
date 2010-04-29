@@ -21,6 +21,26 @@
             (expand-file-name
              (concat "#%" (buffer-name) "#")))))
 
+(setq initial-frame-alist '(
+                    (top . 40) (left . 50)
+                    (width . 250) (height . 68)
+                    )
+  )
+
+
+(defvar scratch-buffer-file-name "~/sktch.el"
+  "file name for *scratch* buffer")
+
+(defun synch-scratch-with-file ()
+  "replace *scratch* buffer with the file scratch-buffer-file-name"
+  (save-window-excursion
+    (find-file scratch-buffer-file-name)
+    (kill-buffer "*scratch*")
+    (rename-buffer "*scratch*")
+    (lisp-interaction-mode)))
+(synch-scratch-with-file)
+
+
 ;; Put backup files (ie foo~) in one place too. (The backup-directory-alist
 ;; list contains regexp=>directory mappings; filenames matching a regexp are
 ;; backed up in the corresponding directory. Emacs will mkdir it if necessary.)
@@ -445,6 +465,18 @@
 
 ;; Activate theme
 (color-theme-dfarkas)
+
+;; personal-layout
+(defun personal-layout ()
+  "Arrange windows to my personal layout."
+  (interactive)
+  (delete-other-windows)
+  (split-window-horizontally)
+  (windmove-right)
+  (split-window-vertically)
+  (windmove-left))
+
+(personal-layout)
 
 (provide 'dfarkas)
 ;; dfarkas.el ends here
