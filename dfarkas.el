@@ -1,6 +1,13 @@
 ;;; dfarkas.el --- Some helpful dfarkas code
 ;; DESCRIPTION: dfarkas settings
 
+(setq initial-frame-alist '(
+                    (top . 40) (left . 50)
+                    (width . 250) (height . 68)
+                    )
+  )
+
+
 (add-to-list 'load-path (concat dotfiles-dir "/vendor"))
 
 ;; Save backups in one place
@@ -21,11 +28,6 @@
             (expand-file-name
              (concat "#%" (buffer-name) "#")))))
 
-(setq initial-frame-alist '(
-                    (top . 40) (left . 50)
-                    (width . 250) (height . 68)
-                    )
-  )
 
 
 (defvar scratch-buffer-file-name "~/sktch.el"
@@ -346,7 +348,7 @@
      (font-lock-doc-face ((t (:italic t :slant oblique :foreground "BurlyWood"))))
      (font-lock-doc-string-face ((t (:italic t :slant oblique :foreground "BurlyWood"))))
      (font-lock-function-name-face ((t (:bold t :foreground "#888" :weight bold :height 0.9 :family "Verdana")))) ;; function name
-     (font-lock-keyword-face ((t (:foreground "MidnightBlue")))) ;; keyword def-end-class-etc...
+     (font-lock-keyword-face ((t (:foreground "SteelBlue")))) ;; keyword def-end-class-etc...
      (font-lock-preprocessor-face ((t (:bold t :foreground "Gold" :weight bold))))
      (font-lock-reference-face ((t (:foreground "SteelBlue"))))
      (font-lock-string-face ((t (:italic t :foreground "slategrey" :slant oblique)))) ;; string
@@ -477,6 +479,15 @@
   (windmove-left))
 
 (personal-layout)
+
+;; C-tab to go through buffer like everywhere else
+
+(global-set-key [C-tab] 'next-buffer)
+(global-set-key [C-S-iso-lefttab] 'previous-buffer)
+
+;; use M-{up,right,down,left} for windmove
+(windmove-default-keybindings 'meta)
+
 
 (provide 'dfarkas)
 ;; dfarkas.el ends here
