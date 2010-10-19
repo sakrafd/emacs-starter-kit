@@ -8,13 +8,6 @@
 (define-key lisp-mode-shared-map (kbd "C-\\") 'lisp-complete-symbol)
 (define-key lisp-mode-shared-map (kbd "C-c v") 'eval-buffer)
 
-(eval-after-load 'paredit
-  '(progn
-     ;; Not sure why paredit behaves this way with comments; it's annoying
-     (define-key paredit-mode-map (kbd ";")   'self-insert-command)
-     (add-hook 'emacs-lisp-mode-hook (lambda () (paredit-mode +1)))
-     (add-hook 'lisp-mode-hook (lambda () (paredit-mode +1)))))
-
 (defface esk-paren-face
    '((((class color) (background dark))
       (:foreground "grey50"))
@@ -26,9 +19,7 @@
 ;;; Emacs Lisp
 
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'emacs-lisp-mode-hook 'run-coding-hook)
 (add-hook 'emacs-lisp-mode-hook 'esk-remove-elc-on-save)
-(add-hook 'emacs-lisp-mode-hook 'idle-highlight)
 
 (defun esk-remove-elc-on-save ()
   "If you're saving an elisp file, likely the .elc is no longer valid."
@@ -38,33 +29,39 @@
               (if (file-exists-p (concat buffer-file-name "c"))
                   (delete-file (concat buffer-file-name "c"))))))
 
-(font-lock-add-keywords 'emacs-lisp-mode
-			'(("(\\|)" . 'esk-paren-face)))
+(define-key emacs-lisp-mode-map (kbd "M-.") 'find-function-at-point)
 
 ;;; Clojure
 
-(add-hook 'clojure-mode-hook 'run-coding-hook)
-(add-hook 'clojure-mode-hook 'idle-highlight)
+(eval-after-load 'find-file-in-project
+  '(add-to-list 'ffip-patterns "*.clj"))
 
-(font-lock-add-keywords 'clojure-mode
-                        '(("(\\|)" . 'esk-paren-face)))
+(defun clojure-project ()
+  (interactive)
+  (message "Deprecated in favour of M-x swank-clojure-project. Install swank-clojure from ELPA."))
 
-;; You might like this, but it's a bit disorienting at first:
-;; (setq clojure-enable-paredit t)
+;;; Enhance Lisp Modes
 
-;;; Scheme
+(eval-after-load 'paredit
+  ;; need a binding that works in the terminal
+  '(define-key paredit-mode-map (kbd "M-)") 'paredit-forward-slurp-sexp))
 
-(add-hook 'scheme-mode-hook 'run-coding-hook)
-(add-hook 'scheme-mode-hook 'idle-highlight)
-(font-lock-add-keywords 'scheme-mode
-			'(("(\\|)" . 'esk-paren-face)))
+(dolist (x '(scheme emacs-lisp lisp clojure))
+  (when window-system
+    (font-lock-add-keywords
+     (intern (concat (symbol-name x) "-mode"))
+     '(("(\\|)" . 'esk-paren-face))))
+  (add-hook
+   (intern (concat (symbol-name x) "-mode-hook")) 'turn-on-paredit)
+  (add-hook
+   (intern (concat (symbol-name x) "-mode-hook")) 'run-coding-hook))
 
-;;; Common Lisp
-
-(add-hook 'lisp-mode-hook 'run-coding-hook)
-(add-hook 'lisp-mode-hook 'idle-highlight)
-(font-lock-add-keywords 'lisp-mode
-			'(("(\\|)" . 'esk-paren-face)))
+(eval-after-load 'clojure-mode
+  '(font-lock-add-keywords
+    'clojure-mode `(("(\\(fn\\>\\)"
+                     (0 (progn (compose-region (match-beginning 1)
+                                               (match-end 1) "ƒ")
+                               nil))))))
 
 (provide 'starter-kit-lisp)
 ;; starter-kit-lisp.el ends here
