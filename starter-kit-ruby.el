@@ -26,6 +26,13 @@
 ;; We never want to edit Rubinius bytecode
 (add-to-list 'completion-ignored-extensions ".rbc")
 
+(add-hook 'ruby-mode-hook
+  (lambda()
+    (hl-line-mode -1)
+    (global-hl-line-mode -1))
+  't
+)
+
 ;;; Rake
 
 (defun pcomplete/rake ()

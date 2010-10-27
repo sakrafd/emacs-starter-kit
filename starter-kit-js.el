@@ -2,6 +2,7 @@
 ;;
 ;; Part of the Emacs Starter Kit
 
+
 (autoload 'espresso-mode "espresso" "Start espresso-mode" t)
 (add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
@@ -9,6 +10,7 @@
 (add-hook 'espresso-mode-hook 'esk-paredit-nonlisp)
 (add-hook 'espresso-mode-hook 'run-coding-hook)
 (setq espresso-indent-level 2)
+
 
 ;; If you prefer js2-mode, use this instead:
 ;; (add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
@@ -23,6 +25,13 @@
                              (0 (progn (compose-region (match-beginning 1)
                                                        (match-end 1) "ƒ")
                                        nil)))))))
+
+(add-hook 'js-mode-hook
+  (lambda()
+    (hl-line-mode -1)
+    (global-hl-line-mode -1))
+  't
+)
 
 (provide 'starter-kit-js)
 ;;; starter-kit-js.el ends here

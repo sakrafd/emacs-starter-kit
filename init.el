@@ -62,11 +62,12 @@
 (require 'starter-kit-misc)
 (require 'starter-kit-registers)
 (require 'starter-kit-eshell)
-(require 'starter-kit-lisp)
- ;;(require 'starter-kit-perl)
+;;(require 'starter-kit-lisp)
+  ;;(require 'starter-kit-perl)
 (require 'starter-kit-ruby)
- ;;(require 'starter-kit-js)
+(require 'starter-kit-js)
 
+(global-hl-line-mode -1)
 ;;(regen-autoloads)
 (load custom-file 'noerror)
 
