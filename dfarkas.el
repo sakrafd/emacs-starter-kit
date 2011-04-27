@@ -3,7 +3,7 @@
 
 (setq initial-frame-alist '(
                     (top . 40) (left . 50)
-                    (width . 250) (height . 68)
+                    (width . 350) (height . 68)
                     )
   )
 
@@ -191,6 +191,7 @@
   (color-theme-dfarkas))
 
 (global-set-key [f8] 'dfarkas-reload-theme)
+
 
 ;; theme-colors
 ;; yellow: #ffffcc
@@ -474,8 +475,11 @@
   (interactive)
   (delete-other-windows)
   (split-window-horizontally)
+  (split-window-horizontally)
+  (windmove-right)
   (windmove-right)
   (split-window-vertically)
+  (windmove-left)
   (windmove-left))
 
 (personal-layout)

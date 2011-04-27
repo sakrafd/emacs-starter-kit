@@ -47,7 +47,7 @@
 
 (require 'cl)
 (require 'saveplace)
-(require 'ffap)
+;; (require 'ffap)
 (require 'uniquify)
 (require 'ansi-color)
 (require 'recentf)
