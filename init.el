@@ -15,16 +15,7 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-;; Fix cocoa emacs not getting user path
-(setenv "PATH" (concat "/opt/bin:/usr/local/git/bin:" (getenv "PATH"))) 
-;;(setenv "PATH" (concat "/usr/local/git/bin:" (getenv "PATH")))
-
-(setq exec-path (cons "/opt/bin:/usr/local/git/bin:" exec-path))
-;;(setq exec-path (cons "/usr/local/git/bin:" exec-path)) 
-
-
 ;; Load path etc.
-
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name)))
 
