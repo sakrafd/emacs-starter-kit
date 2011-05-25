@@ -9,6 +9,10 @@
 ;; and brighter; it simply makes everything else vanish."
 ;; -Neal Stephenson, "In the Beginning was the Command Line"
 
+;; Benchmarking
+(defvar *emacs-load-start* (current-time))
+
+;; Load path etc:
 ;; Turn off mouse interface early in startup to avoid momentary display
 ;; You really don't need these; trust me.
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -46,7 +50,9 @@
 ;; backport some functionality to Emacs 22 if needed
 (require 'dominating-file)
 
-;; Load up starter kit customizations
+(require 'package)
+(package-initialize)
+;;(require 'starter-kit-elpa)
 
 (require 'starter-kit-defuns)
 (require 'starter-kit-bindings)
@@ -56,7 +62,7 @@
 ;;(require 'starter-kit-lisp)
   ;;(require 'starter-kit-perl)
 (require 'starter-kit-ruby)
-(require 'starter-kit-js)
+;; (require 'starter-kit-js)
 
 (global-hl-line-mode -1)
 ;;(regen-autoloads)
@@ -73,5 +79,12 @@
 (if (file-exists-p user-specific-dir)
   (mapc #'load (directory-files user-specific-dir nil ".*el$")))
 
-;;; init.el ends here
-(put 'downcase-region 'disabled nil)
+;; Benchmarking
+(message "My .emacs loaded in %ds"
+         (destructuring-bind (hi lo ms) (current-time)
+           (- (+ hi lo) (+ (first *emacs-load-start*) (second
+                                                       *emacs-load-start*)))))
+
+
+(provide 'init)
+;;; init.el ends here(put 'downcase-region 'disabled nil)
