@@ -24,6 +24,9 @@
 (global-set-key [(control shift left)] 'previous-buffer)
 (global-set-key [(control shift right)] 'next-buffer)
 
+(global-set-key [(s \{)] 'previous-buffer)
+(global-set-key [(s \})] 'next-buffer)
+
 (global-set-key [(meta H)] 'delete-other-windows)
 
 (global-set-key [(meta D)] 'backward-kill-word) ;; (meta d) is opposite
