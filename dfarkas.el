@@ -2,8 +2,8 @@
 ;; DESCRIPTION: dfarkas settings
 
 (setq initial-frame-alist '(
-                    (top . 40) (left . 50)
-                    (width . 350) (height . 68)
+                    (top . 5) (left . 5)
+                    (width . 200) (height . 55)
                     )
   )
 
@@ -163,12 +163,12 @@ environment."
   "Arrange windows to my personal layout."
   (interactive)
   (delete-other-windows)
+;;  (split-window-horizontally)
   (split-window-horizontally)
-  (split-window-horizontally)
-  (windmove-right)
+;;  (windmove-right)
   (windmove-right)
   (split-window-vertically)
-  (windmove-left)
+;;  (windmove-left)
   (windmove-left))
 
 (personal-layout)
