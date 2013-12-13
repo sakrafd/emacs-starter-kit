@@ -10,7 +10,7 @@
 ;; -Neal Stephenson, "In the Beginning was the Command Line"
 
 ;; Benchmarking
-(defvar *emacs-load-start* (current-time))
+;;(defvar *emacs-load-start* (current-time))
 
 ;; Load path etc:
 ;; Turn off mouse interface early in startup to avoid momentary display
@@ -79,11 +79,17 @@
 (if (file-exists-p user-specific-dir)
   (mapc #'load (directory-files user-specific-dir nil ".*el$")))
 
+
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  )
 ;; Benchmarking
-(message "My .emacs loaded in %ds"
-         (destructuring-bind (hi lo ms) (current-time)
-           (- (+ hi lo) (+ (first *emacs-load-start*) (second
-                                                       *emacs-load-start*)))))
+;;(message "My .emacs loaded in %ds"
+;;         (destructuring-bind (hi lo ms) (current-time)
+;;           (- (+ hi lo) (+ (first *emacs-load-start*) (second
+;;                                                       *emacs-load-start*)))))
 
 
 (provide 'init)

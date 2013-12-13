@@ -152,8 +152,8 @@ environment."
 (color-theme-initialize)
 
 ;; Use the solarized-dark color theme
-;;(add-to-list 'load-path (concat user-specific-dir "/color-theme-solarized"))
-;;(require 'color-theme-solarized)
+(add-to-list 'load-path (concat user-specific-dir "/color-theme-solarized"))
+(require 'color-theme-solarized)
 ;;(color-theme-solarized-dark)
 (load (concat dotfiles-dir "dfarkas/theme.el"))
 (color-theme-dfarkas)

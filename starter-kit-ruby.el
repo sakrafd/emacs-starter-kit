@@ -113,5 +113,14 @@ exec-to-string command, but it works and seems fast"
 ;; TODO: set up ri
 ;; TODO: electric
 
+;;(require 'flymake-ruby)
+;;(add-hook 'ruby-mode-hook 'flymake-ruby-load)
+
+;;(require 'ruby-tools)
+
+;;(require 'rhtml-mode)
+;; (add-hook 'rhtml-mode-hook
+;;     	  (lambda () (rinari-launch)))
+
 (provide 'starter-kit-ruby)
 ;; starter-kit-ruby.el ends here

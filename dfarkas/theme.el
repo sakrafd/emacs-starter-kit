@@ -116,7 +116,7 @@
      (erc-default-face ((t (nil))))
      (erc-direct-msg-face ((t (:foreground "pale green"))))
      (erc-error-face ((t (:bold t :foreground "IndianRed" :weight bold))))
-     (erc-highlight-face ((t (:bold t :foreground "pale green" :weight bold))))
+     (erc-highlight-face ((t (:bold t :foreground nil :weight bold))))
      (erc-host-danger-face ((t (:foreground "red"))))
      (erc-input-face ((t (:foreground "light blue"))))
      (erc-inverse-face ((t (:background "steel blue"))))
