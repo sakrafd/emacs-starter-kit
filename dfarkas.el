@@ -72,7 +72,6 @@ environment."
 
 ;; Commands
 (require 'unbound)
-
 ;; Minor Modes
 (add-to-list 'load-path (concat dotfiles-dir "/vendor/textmate.el"))
 (require 'textmate)
@@ -145,6 +144,10 @@ environment."
 (require 'gist)
 
 (prefer-coding-system 'utf-8)
+(setq make-backup-files nil) ;; disable backup files
+(setq auto-save-default nil) ; turns off that blasted auto-save shit
+(add-hook 'before-save-hook 'delete-trailing-whitespace) ;; deletes all whitespace that isn't needed.
+
 
 ;; Color Theme
 (add-to-list 'load-path (concat dotfiles-dir "/vendor/color-theme"))
