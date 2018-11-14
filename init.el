@@ -33,8 +33,27 @@
 (setq package-user-dir (concat dotfiles-dir "elpa"))
 (setq custom-file (concat dotfiles-dir "custom.el"))
 
+
+
+;; the package manager
 (require 'package)
+(setq
+ package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                    ("org" . "http://orgmode.org/elpa/")
+                    ("melpa" . "http://melpa.org/packages/")
+                    ("melpa-stable" . "http://stable.melpa.org/packages/"))
+ package-archive-priorities '(("melpa-stable" . 1)))
+
 (package-initialize)
+(when (not package-archive-contents)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'use-package)
+
+;;(when (< emacs-major-version 24)
+;;  ;; For important compatibility libraries like cl-lib
+;;  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+;;(package-initialize)
 (require 'starter-kit-elpa)
 
 ;; These should be loaded on startup rather than autoloaded on demand
@@ -62,7 +81,7 @@
 ;;(require 'starter-kit-lisp)
   ;;(require 'starter-kit-perl)
 (require 'starter-kit-ruby)
-;; (require 'starter-kit-js)
+;;(require 'starter-kit-js)
 
 (global-hl-line-mode -1)
 ;;(regen-autoloads)
@@ -79,18 +98,26 @@
 (if (file-exists-p user-specific-dir)
   (mapc #'load (directory-files user-specific-dir nil ".*el$")))
 
-
 (when (>= emacs-major-version 24)
   (require 'package)
-  (package-initialize)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-  )
+  (add-to-list
+   'package-archives
+   '("melpa" . "http://melpa.org/packages/")
+   t)
+  (package-initialize))
+
+;; (when (>= emacs-major-version 24)
+;;   (require 'package)
+;;   (package-initialize)
+;;   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;;   )
 ;; Benchmarking
 ;;(message "My .emacs loaded in %ds"
 ;;         (destructuring-bind (hi lo ms) (current-time)
 ;;           (- (+ hi lo) (+ (first *emacs-load-start*) (second
 ;;                                                       *emacs-load-start*)))))
 
+;;load "~./.emacs.d/fireplace"
 
 (provide 'init)
 ;;; init.el ends here(put 'downcase-region 'disabled nil)

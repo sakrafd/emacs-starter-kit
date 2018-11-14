@@ -1,6 +1,7 @@
 ;;; dfarkas.el --- Some helpful dfarkas code
 ;; DESCRIPTION: dfarkas settings
 
+(setq ns-use-srgb-colorspace t)
 (setq initial-frame-alist '(
                     (top . 5) (left . 5)
                     (width . 200) (height . 55)
@@ -45,6 +46,7 @@ environment."
 
 (add-to-list 'load-path (concat dotfiles-dir "/vendor"))
 
+(global-set-key [(control z)] nil)
 
 ;; prompt to save scratch file
 (defvar scratch-buffer-file-name "~/sktch.el"
@@ -167,12 +169,12 @@ environment."
   (interactive)
   (delete-other-windows)
 ;;  (split-window-horizontally)
-  (split-window-horizontally)
+  (split-window-horizontally))
 ;;  (windmove-right)
-  (windmove-right)
-  (split-window-vertically)
+;;  (windmove-right)
+;;  (split-window-vertically)
 ;;  (windmove-left)
-  (windmove-left))
+;;  (windmove-left))
 
 (personal-layout)
 
@@ -218,6 +220,15 @@ environment."
 
     (setq ring-bell-function 'echo-area-bell)
 
+(add-to-list 'load-path "~/emacs.d/vendor")
+(require 'guru-mode)
+
+(add-hook 'prog-mode-hook 'guru-mode)
+(setq guru-warn-only t)
+
+(use-package ensime
+ :ensure t
+ :pin melpa-stable)
 
 (provide 'dfarkas)
 ;; dfarkas.el ends here

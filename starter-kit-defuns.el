@@ -27,22 +27,22 @@ Symbols matching the text at point are put first in the completion list."
   (imenu--make-index-alist)
   (let ((name-and-pos '())
         (symbol-names '()))
-    (flet ((addsymbols (symbol-list)
+    (cl-flet ((addsymbols (symbol-list)
                        (when (listp symbol-list)
                          (dolist (symbol symbol-list)
                            (let ((name nil) (position nil))
                              (cond
                               ((and (listp symbol) (imenu--subalist-p symbol))
                                (addsymbols symbol))
-                              
+
                               ((listp symbol)
                                (setq name (car symbol))
                                (setq position (cdr symbol)))
-                              
+
                               ((stringp symbol)
                                (setq name symbol)
                                (setq position (get-text-property 1 'org-imenu-marker symbol))))
-                             
+
                              (unless (or (null position) (null name))
                                (add-to-list 'symbol-names name)
                                (add-to-list 'name-and-pos (cons name position))))))))
@@ -77,8 +77,8 @@ Symbols matching the text at point are put first in the completion list."
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
   (auto-fill-mode t))
 
-(defun turn-on-hl-line-mode ()
-  (if window-system (hl-line-mode t)))
+;;(defun turn-on-hl-line-mode ()
+;;  (if window-system (hl-line-mode t)))
 
 (defun turn-on-save-place-mode ()
   (setq save-place t))
@@ -104,7 +104,7 @@ Symbols matching the text at point are put first in the completion list."
 (add-hook 'coding-hook 'pretty-lambdas)
 (add-hook 'coding-hook 'add-watchwords)
 ;;(add-hook 'coding-hook 'idle-highlight)
-  
+
 (defun run-coding-hook ()
   "Enable things that are convenient across all coding buffers."
   (run-hooks 'coding-hook))

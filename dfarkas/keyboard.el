@@ -1,3 +1,9 @@
+;; last buffer
+(defun switch-to-previous-buffer ()
+      (interactive)
+      (switch-to-buffer (other-buffer (current-buffer) 1)))
+
+(global-set-key [f1] 'switch-to-previous-buffer)
 
 ;; Split Windows
 (global-set-key [f6] 'split-window-horizontally)
