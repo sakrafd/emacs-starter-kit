@@ -50,6 +50,22 @@
   (package-install 'use-package))
 (require 'use-package)
 
+
+
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+
+(unless (require 'el-get nil 'noerror)
+  (require 'package)
+  (add-to-list 'package-archives
+               '("melpa" . "http://melpa.org/packages/"))
+  (package-refresh-contents)
+  (package-initialize)
+  (package-install 'el-get)
+  (require 'el-get))
+
+(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
+(el-get 'sync)
+
 ;;(when (< emacs-major-version 24)
 ;;  ;; For important compatibility libraries like cl-lib
 ;;  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
@@ -82,7 +98,7 @@
   ;;(require 'starter-kit-perl)
 (require 'starter-kit-ruby)
 ;;(require 'starter-kit-js)
-
+(require 'lua-mode)
 (global-hl-line-mode -1)
 ;;(regen-autoloads)
 (load custom-file 'noerror)
